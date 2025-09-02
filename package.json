@@ -1,7 +1,8 @@
 {
   "name": "dev-playwright",
   "version": "0.0.54",
-  "description": "AI-powered development tools with browser monitoring and MCP server integration",
+  "description": "⚠️ DEPRECATED: Use 'dev3000' instead - https://github.com/vercel-labs/dev3000",
+  "deprecated": "This package has moved to 'dev3000'. Please install dev3000 instead: npm install dev3000",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -54,6 +55,7 @@
     "type": "git",
     "url": "https://github.com/elsigh/dev-playwright.git"
   },
+  "homepage": "https://github.com/vercel-labs/dev3000",
   "author": "Lindsey Simon <elsigh@gmail.com>",
   "license": "MIT"
 }
