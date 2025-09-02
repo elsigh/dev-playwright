@@ -58,6 +58,7 @@ export class DevEnvironment {
   private logger: Logger;
   private stateTimer: NodeJS.Timeout | null = null;
   private browserType: 'system-chrome' | 'playwright-chromium' | null = null;
+  private lastStateSaveTime: Date | null = null;
   private options: DevEnvironmentOptions;
   private screenshotDir: string;
   private mcpPublicDir: string;
@@ -388,12 +389,13 @@ export class DevEnvironment {
       });
     }
     
-    // Set up periodic storage state saving (every 30 seconds)
+    // Set up periodic storage state saving (every 15 seconds)
     this.stateTimer = setInterval(async () => {
       if (this.browserContext) {
         try {
           const stateFile = join(this.options.profileDir, 'state.json');
           await this.browserContext.storageState({ path: stateFile });
+          this.lastStateSaveTime = new Date();
         } catch (error) {
           // Ignore errors - context might be closed
         }
@@ -628,9 +630,15 @@ export class DevEnvironment {
           console.log(chalk.blue('💾 Saving browser state...'));
           const stateFile = join(this.options.profileDir, 'state.json');
           await this.browserContext.storageState({ path: stateFile });
+          this.lastStateSaveTime = new Date();
           console.log(chalk.green('✅ Browser state saved'));
         } catch (error) {
-          console.log(chalk.gray('⚠️ Could not save browser state'));
+          let message = chalk.gray('⚠️ Could not save browser state');
+          if (this.lastStateSaveTime) {
+            const secondsAgo = Math.floor((Date.now() - this.lastStateSaveTime.getTime()) / 1000);
+            message += chalk.gray(` (but all good, saved ${secondsAgo}s ago)`);
+          }
+          console.log(message);
         }
       }
       
