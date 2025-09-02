@@ -1,6 +1,6 @@
 {
   "name": "dev-playwright",
-  "version": "0.0.54",
+  "version": "0.0.55",
   "description": "⚠️ DEPRECATED: Use 'dev3000' instead - https://github.com/vercel-labs/dev3000",
   "deprecated": "This package has moved to 'dev3000'. Please install dev3000 instead: npm install dev3000",
   "type": "module",
